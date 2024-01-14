@@ -1,6 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+	"runtime/trace"
+)
 
 func buscarMenor(lista []int) int {
 	menor := lista[0]
@@ -25,6 +29,16 @@ func ordenarPorSelecao(lista []int) []int {
 }
 
 func main() {
+	t, err := os.Create("trace.out")
+	if err != nil {
+		panic(err)
+	}
+
+	err = trace.Start(t)
+	if err != nil {
+		panic(err)
+	}
+	defer trace.Stop()
 	lista := []int{5, 3, 6, 2, 10}
 	fmt.Println(ordenarPorSelecao(lista))
 }
